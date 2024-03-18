@@ -8,7 +8,7 @@ interface ExchangeRate {
 }
 
 const App: React.FC = () => {
-  const [ethAmount, setEthAmount] = useState<number>('');
+  const [ethAmount, setEthAmount] = useState<number>(0);
   const [action, setAction] = useState<string>('buy');
   const [usdtAmount, setUsdtAmount] = useState<number>(0);
 
@@ -19,7 +19,7 @@ const App: React.FC = () => {
           'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT'
         );
         const exchangeRate = response.data.price;
-        const calculatedAmount = action === 'buy' ? ethAmount * exchangeRate : ethAmount / exchangeRate;
+        const calculatedAmount = action === 'buy' ? ethAmount * exchangeRate : Number((ethAmount / exchangeRate).toFixed(5)) ;
         setUsdtAmount(calculatedAmount);
       } catch (error) {
         console.error('Error fetching exchange rate:', error);
